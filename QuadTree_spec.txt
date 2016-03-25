@@ -1,0 +1,127 @@
+
+QuadTree project: The quadtree representation of a given binary image.
+
+**** Language: ** C++ **
+
+*******************************
+I. Input: a text file contains a binary image (0/1)  with image header information) 
+	  // Use argv[1] for the name of input file
+*******************************
+
+II. Output1: a text file contains the pre-order of the quadtree from your program.
+ 	 **** The name of the output file should be given in argv[2]
+	
+    Output2: all the debugging outputs within the program should be written in output2.
+        **** The name of the output file should be given in argv[3]
+	
+*******************************
+III. Data structure:
+*******************************
+
+  - A QuadTreeNode class 
+
+    friend QuadTree class
+    friend image class
+
+	- numRows (int)
+	- numCols (int)
+	- minVal (int)
+	- maxVal (int)
+	- color (int) // 0, 1 or 2
+	- rowOffset (int)
+ 	- colOffset (int)
+ 	- NW_kid (QuadTreeNode*) // initialized to NULL
+	- SW_kid (QuadTreeNode*) // initialized to NULL
+	- SE_kid (QuadTreeNode*) // initialized to NULL
+	- NE_kid (QuadTreeNode*) // initialized to NULL
+  
+	- methods:
+		- computeOffsets 
+		- computenumRowsCols 
+		- computeMinMaxValue // optional
+		- computeColor
+		- printNode
+		- constructor(s)
+		- destructor(s)
+		- etc.
+
+- A QuadTree class 
+
+	- rootNode (QuadTreeNode*)
+ 
+ 	- methods:
+		- constructor(s)
+		- BuildQuadTree
+		- PrintQuadTree
+
+ - An image class 
+
+	- numRows (int)
+	- numCols (int)
+	- minVal (int)
+	- maxVal (int)
+	- imgAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows by numCols.
+
+     - methods:
+		- makeImgAry // dynamically allocate 2D imgAry
+		- loadImage //read the input data onto imgAry
+		- constructor(s)	
+			// assign values to numRows,..., etc.
+			
+      
+*******************************
+III. Algorithms 
+*******************************
+  
+step 0: create program skeleton
+	//write up all the classes for the program.
+
+step 1: open the input file
+	   and read the image header (numRows, numCols, minVal and maxVal)
+	
+step 2: makeImgAry
+
+step 3: loadImage
+
+step 4: rootNode <-- Create the quadtree root
+
+step 5: BuildQuadTree (in recursion, see algorithm steps below)
+
+step 6: PrintQuadTree (in pre-order recursion, see algorithm steps below)
+
+      
+*******************************
+Recursive Algorithm for BuildQuadTree
+*******************************
+
+void BuildQuadTree (QuadTreeNode *T) 
+
+Step 1: if T is null or T's color != 2
+          		return
+        else
+	       create a QuadTreeNode for T->NW;
+            BuildQuadTree(T->NW)
+            create a QuadTreeNode for T->SW;
+            BuildQuadTree(T->SW)
+            create a QuadTreeNode for T->SE;
+            BuildQuadTree(T->SE)
+            create a QuadTreeNode for T->NE;
+            BuildQuadTree(T->NE)
+
+*******************************
+Recursive Algorithm for PrintQuadTree
+*******************************
+ void printQuadTree (QuadTreeNode *T) 
+
+step 1: if T is null
+		return
+	   else
+		printNode(T) // see algorithm below.
+		printQuadTree (T->NW) 
+		printQuadTree (T->SW) 
+		printQuadTree (T->SE) 
+		printQuadTree (T->NE) 
+	
+
+
